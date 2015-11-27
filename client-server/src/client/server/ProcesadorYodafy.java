@@ -12,6 +12,7 @@ package client.server;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
 
@@ -23,6 +24,7 @@ import java.util.Random;
 public class ProcesadorYodafy {
 	// Referencia a un socket para enviar/recibir las peticiones/respuestas
 	private Socket socketServicio;
+
 	// stream de lectura (por aquí se recibe lo que envía el cliente)
 	private InputStream inputStream;
 	// stream de escritura (por aquí se envía los datos al cliente)
