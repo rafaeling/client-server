@@ -29,8 +29,11 @@ public class YodafyClienteTCP {
 		// Nombre del host donde se ejecuta el servidor:
 		String host="localhost";
 		// Puerto en el que espera el servidor:
-		int port=8989;
+		int port=888;
 		
+               
+                
+                
 		// Socket para la conexión TCP
 		Socket socketServicio=null;
 		
@@ -40,6 +43,9 @@ public class YodafyClienteTCP {
 			// socketServicio= ... (Completar)
 			//////////////////////////////////////////////////////			
 			
+                        socketServicio =new Socket (host,port);
+
+                        
 			InputStream inputStream = socketServicio.getInputStream();
 			OutputStream outputStream = socketServicio.getOutputStream();
 			
@@ -47,11 +53,16 @@ public class YodafyClienteTCP {
 			// a un array de bytes:
 			buferEnvio="Al monte del volcán debes ir sin demora".getBytes();
 			
+                        
+                        
+                        
 			// Enviamos el array por el outputStream;
 			//////////////////////////////////////////////////////
 			// ... .write ... (Completar)
 			//////////////////////////////////////////////////////
 			
+                        outputStream.write(buferEnvio,0,buferEnvio.length);
+                        
 			// Aunque le indiquemos a TCP que queremos enviar varios arrays de bytes, sólo
 			// los enviará efectivamente cuando considere que tiene suficientes datos que enviar...
 			// Podemos usar "flush()" para obligar a TCP a que no espere para hacer el envío:
@@ -59,12 +70,20 @@ public class YodafyClienteTCP {
 			// ... .flush(); (Completar)
 			//////////////////////////////////////////////////////
 			
+                        outputStream.flush();
+                        
 			// Leemos la respuesta del servidor. Para ello le pasamos un array de bytes, que intentará
 			// rellenar. El método "read(...)" devolverá el número de bytes leídos.
 			//////////////////////////////////////////////////////
 			// bytesLeidos ... .read... buferRecepcion ; (Completar)
 			//////////////////////////////////////////////////////
 			
+                        // Hay que reservar memoria para almacenar lo leído
+                        // Intenta leer tantos bytes como posiciones tiene el
+                        // array de bytes, aunque es posible que no haya
+                        // tantos datos, y sólo se lean bytesLeidos:
+                        bytesLeidos = inputStream.read(buferRecepcion);
+                        
 			// MOstremos la cadena de caracteres recibidos:
 			System.out.println("Recibido: ");
 			for(int i=0;i<bytesLeidos;i++){
@@ -77,6 +96,8 @@ public class YodafyClienteTCP {
 			// ... close(); (Completar)
 			//////////////////////////////////////////////////////
 			
+                        socketServicio.close();
+                        
 			// Excepciones:
 		} catch (UnknownHostException e) {
 			System.err.println("Error: Nombre de host no encontrado.");
