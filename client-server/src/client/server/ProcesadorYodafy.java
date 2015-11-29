@@ -9,9 +9,12 @@ package client.server;
  *
  * @author rafaeing
  */
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
@@ -27,10 +30,10 @@ public class ProcesadorYodafy {
 	private Socket socketServicio;
 
 	// stream de lectura (por aquí se recibe lo que envía el cliente)
-	private InputStream inputStream;
+	private BufferedReader inputStream;
         
 	// stream de escritura (por aquí se envía los datos al cliente)
-	private OutputStream outputStream;
+	private PrintWriter outputStream;
 	
 	// Para que la respuesta sea siempre diferente, usamos un generador de números aleatorios.
 	private Random random;
@@ -48,7 +51,7 @@ public class ProcesadorYodafy {
 	void procesa(){
 		
 		// Como máximo leeremos un bloque de 1024 bytes. Esto se puede modificar.
-		byte [] datosRecibidos=new byte[1024];
+		String datosRecibidos="";
                 
 		int bytesRecibidos=0;
 		
@@ -60,32 +63,35 @@ public class ProcesadorYodafy {
 		try {
 			// Obtiene los flujos de escritura/lectura
                         
-			inputStream=socketServicio.getInputStream();
+			//InputStream inputStream = socketServicio.getInputStream();
+			inputStream = new BufferedReader(new InputStreamReader(socketServicio.getInputStream()));
                         
-			outputStream=socketServicio.getOutputStream();			
-                        
-                        
+                        //OutputStream outputStream = socketServicio.getOutputStream();
+                        outputStream = new PrintWriter(socketServicio.getOutputStream(),true);
+			
 			// Lee la frase a Yodaficar:
                         
-                        bytesRecibidos = inputStream.read(datosRecibidos);                        
+                        datosRecibidos = inputStream.readLine();                        
+                        
+                        
                         
                         
 			// Yoda hace su magia:
 			// Creamos un String a partir de un array de bytes de tamaño "bytesRecibidos":
-			String peticion=new String(datosRecibidos,0,bytesRecibidos);                                                                     
+			//String peticion=new String(datosRecibidos,0,bytesRecibidos);                                                                     
                         
                         
 			// Yoda reinterpreta el mensaje:
-			String respuesta=yodaDo(peticion);                        
+			String respuesta=yodaDo(datosRecibidos);                        
                         
                         
 			// Convertimos el String de respuesta en una array de bytes:
-			datosEnviar=respuesta.getBytes();
+			//datosEnviar=respuesta.getBytes();
 			
                         
 			// Enviamos la traducción de Yoda:
 			
-			outputStream.write(datosEnviar,0,datosEnviar.length);
+			outputStream.println(respuesta);
                         
 			
 		} catch (IOException e) {
