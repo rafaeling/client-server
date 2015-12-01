@@ -52,13 +52,7 @@ public class ProcesadorYodafy {
 		
 		// Como máximo leeremos un bloque de 1024 bytes. Esto se puede modificar.
 		String datosRecibidos="";
-                
-		int bytesRecibidos=0;
-		
-                
-		// Array de bytes para enviar la respuesta. Podemos reservar memoria cuando vayamos a enviarka:
-		byte [] datosEnviar;
-		
+             
 		
 		try {
 			// Obtiene los flujos de escritura/lectura
@@ -77,17 +71,12 @@ public class ProcesadorYodafy {
                         
                         
 			// Yoda hace su magia:
-			// Creamos un String a partir de un array de bytes de tamaño "bytesRecibidos":
-			//String peticion=new String(datosRecibidos,0,bytesRecibidos);                                                                     
-                        
+			
                         
 			// Yoda reinterpreta el mensaje:
 			String respuesta=yodaDo(datosRecibidos);                        
                         
-                        
-			// Convertimos el String de respuesta en una array de bytes:
-			//datosEnviar=respuesta.getBytes();
-			
+                       
                         
 			// Enviamos la traducción de Yoda:
 			
