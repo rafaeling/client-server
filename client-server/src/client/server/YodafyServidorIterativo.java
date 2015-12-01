@@ -18,9 +18,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
-public class YodafyServidorIterativo {
+public class YodafyServidorIterativo extends Thread{
 
-	public static void main(String[] args) {
+	
 	
             // Puerto de escucha
             int port=8989;
@@ -31,7 +31,9 @@ public class YodafyServidorIterativo {
             // Servicio
             Socket socketServicio;
             
-                    
+        
+            
+        public void run() {
                 
             try {
 			// Abrimos el socket en modo pasivo, escuchando el en puerto indicado por "port"
